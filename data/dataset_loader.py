@@ -221,26 +221,3 @@ class LMSYSDatasetLoader:
         
         return categories
     
-    def validate_user_agnostic_success(self, success_rates: Dict[str, bool], 
-                                     min_success_rate: float = 0.8) -> bool:
-        """
-        Validate if a payload is truly user-agnostic by checking success across diverse queries
-        
-        Args:
-            success_rates: Dictionary mapping query to success boolean
-            min_success_rate: Minimum success rate required to be considered user-agnostic
-            
-        Returns:
-            True if the payload achieves the minimum success rate across queries
-        """
-        if not success_rates:
-            return False
-        
-        total_queries = len(success_rates)
-        successful_queries = sum(success_rates.values())
-        actual_success_rate = successful_queries / total_queries
-        
-        logger.info(f"User-agnostic validation: {successful_queries}/{total_queries} "
-                   f"success rate: {actual_success_rate:.2f}, required: {min_success_rate}")
-        
-        return actual_success_rate >= min_success_rate
